@@ -14,8 +14,9 @@ const Navbar = () => {
     { name: "Home", path: "/home" },
     { name: "Chatbot", path: "/chatbot" },
     { name: "Journal", path: "/journal" },
-    { name: "Mood Tracker", path: "/mood" },
+    { name: "Tracker", path: "/Tracker" },
     { name: "Music", path: "/music" },
+    { name: "Appointment", path: "/DoctorChat" },
     { name: "Relax", path: "/relax" },
     { name: "Help", path: "/help" },
   ];

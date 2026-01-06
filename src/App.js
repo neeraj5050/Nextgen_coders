@@ -14,13 +14,17 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Home from "./pages/Home";
 import Chatbot from "./pages/chatbot";
-import Mood from "./pages/mood";
+import Tracker from "./pages/Tracker";
 import Journal from "./pages/journal";
 import JournalHistory from "./pages/Journalhistory";
 import Music from "./pages/music";
 import Relax from "./pages/relax";
 import Help from "./pages/Help";
 import Test from "./pages/test";
+import DoctorChat from "./pages/DoctorChat";
+// import VoiceChat from "./pages/VoiceChat";
+import BookingHistory from "./pages/BookingHistory";
+
 
 // Loading Component
 const Loading = () => (
@@ -116,14 +120,6 @@ function App() {
           }
         />
         <Route
-          path="/mood"
-          element={
-            <ProtectedRoute>
-              <Mood />
-            </ProtectedRoute>
-          }
-        />
-        <Route
           path="/journal"
           element={
             <ProtectedRoute>
@@ -131,6 +127,8 @@ function App() {
             </ProtectedRoute>
           }
         />
+        // In App.js
+<Route path="/tracker" element={<ProtectedRoute><Tracker /></ProtectedRoute>} />
         <Route
           path="/journal-history"
           element={
@@ -139,6 +137,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+        {/* <Route path="/voice-chat" element={<ProtectedRoute><VoiceChat /></ProtectedRoute>} /> */}
         <Route
           path="/music"
           element={
@@ -147,11 +146,20 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/bookinghistory" element={<ProtectedRoute><BookingHistory /></ProtectedRoute>} />
         <Route
           path="/Relax"
           element={
             <ProtectedRoute>
               <Relax />
+            </ProtectedRoute>
+          }
+        />
+         <Route
+          path="/DoctorChat"
+          element={
+            <ProtectedRoute>
+              <DoctorChat />
             </ProtectedRoute>
           }
         />
