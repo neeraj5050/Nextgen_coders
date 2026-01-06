@@ -1,11 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
-import { useState, useEffect } from 'react';
-import { onAuthStateChanged, signOut } from "firebase/auth";
-import { auth } from "./firebaseConfig";
-import AuthPage from './pages/Authpage';  // Make sure this path matches your folder
 
-function App() {
+import React, { useState, useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./firebaseConfig";
+
+// Pages
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import Home from "./pages/Home";
+import Chatbot from "./pages/chatbot";
+import Mood from "./pages/mood";
+import Journal from "./pages/journal";
+import JournalHistory from "./pages/Journalhistory";
+import Music from "./pages/music";
+import Relax from "./pages/relax";
+import Help from "./pages/Help";
+import Test from "./pages/test";
+
+// Loading Component
+const Loading = () => (
+  <div className="loading-screen">
+    <p>Loading MindCare...</p>
+  </div>
+);
+
+// Protected Route - Only for logged-in users
+const ProtectedRoute = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -18,72 +43,134 @@ function App() {
     return () => unsubscribe();
   }, []);
 
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-    } catch (error) {
-      console.error("Logout error:", error);
-    }
-  };
+  if (loading) return <Loading />;
 
-  if (loading) {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>Loading...</p>
-        </header>
-      </div>
-    );
-  }
+  return user ? children : <Navigate to="/" replace />;
+};
 
+// Public Route - Redirect to home if already logged in
+const PublicRoute = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  if (loading) return <Loading />;
+
+  return user ? <Navigate to="/home" replace /> : children;
+};
+
+function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+    <Router>
+      <Routes>
+        {/* Public Routes */}
+        <Route
+          path="/"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            <PublicRoute>
+              <Signup />
+            </PublicRoute>
+          }
+        />
 
-        {user ? (
-          <>
-            <p>Welcome back!</p>
-            <p>Signed in as: <strong>{user.email}</strong></p>
-            <button
-              onClick={handleLogout}
-              style={{
-                padding: '12px 24px',
-                fontSize: '16px',
-                backgroundColor: '#ff4d4f',
-                color: 'white',
-                border: 'none',
-                borderRadius: '8px',
-                cursor: 'pointer',
-                marginTop: '20px'
-              }}
-            >
-              Log Out
-            </button>
-          </>
-        ) : (
-          <>
-            <p>
-              Edit <code>src/App.js</code> and save to reload.
-            </p>
-            <a
-              className="App-link"
-              href="https://reactjs.org"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learn React
-            </a>
+        {/* Protected Routes */}
+        <Route
+          path="/home"
+          element={
+            <ProtectedRoute>
+              <Home />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/test" element={<ProtectedRoute><Test /></ProtectedRoute>} />
+        <Route
+          path="/chatbot"
+          element={
+            <ProtectedRoute>
+              <Chatbot />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/mood"
+          element={
+            <ProtectedRoute>
+              <Mood />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/journal"
+          element={
+            <ProtectedRoute>
+              <Journal />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/journal-history"
+          element={
+            <ProtectedRoute>
+              <JournalHistory />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/music"
+          element={
+            <ProtectedRoute>
+              <Music />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/Relax"
+          element={
+            <ProtectedRoute>
+              <Relax />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/help"
+          element={
+            <ProtectedRoute>
+              <Help />
+            </ProtectedRoute>
+          }
+        />
 
-            <div style={{ marginTop: '50px', width: '100%', maxWidth: '420px' }}>
-              <AuthPage />
-            </div>
-          </>
-        )}
-      </header>
-    </div>
+        {/* Fallback */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </Router>
   );
 }
 
 export default App;
+
+
