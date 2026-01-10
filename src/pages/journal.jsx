@@ -1,29 +1,68 @@
-
 import React, { useState, useEffect } from "react";
 import {
   addDoc,
   collection,
   serverTimestamp,
+  query,
+  where,
+  getDocs,
 } from "firebase/firestore";
 import { auth, db } from "../firebaseConfig";
 import Navbar from "../componet/navbar";
 import { useNavigate } from "react-router-dom";
+import { useSubscription } from "../hooks/useSubscription";
+import { toast } from "react-toastify";
 
 const Journal = () => {
   const [entry, setEntry] = useState("");
   const [loading, setLoading] = useState(false);
+  const [weeklyCount, setWeeklyCount] = useState(0);
+  const [weeklyLimit] = useState(2);
   const navigate = useNavigate();
+  const { isPro } = useSubscription();
 
   // Redirect if not logged in
   useEffect(() => {
     if (!auth.currentUser) {
       navigate("/");
+    } else if (!isPro()) {
+      fetchWeeklyCount();
     }
-  }, [navigate]);
+  }, [navigate, isPro]);
+
+  const getStartOfWeek = () => {
+    const now = new Date();
+    const day = now.getDay();
+    const diff = now.getDate() - day + (day === 0 ? -6 : 1); // Monday as start of week
+    return new Date(now.setDate(diff));
+  };
+
+  const fetchWeeklyCount = async () => {
+    try {
+      const startOfWeek = getStartOfWeek();
+      startOfWeek.setHours(0, 0, 0, 0);
+      
+      const q = query(
+        collection(db, "users", auth.currentUser.uid, "journals"),
+        where("createdAt", ">=", startOfWeek)
+      );
+      
+      const snapshot = await getDocs(q);
+      setWeeklyCount(snapshot.size);
+    } catch (error) {
+      console.error("Error fetching journal count:", error);
+    }
+  };
 
   const saveJournal = async () => {
     if (!entry.trim()) {
-      alert("Please write something before saving 💙");
+      toast.warning("Please write something before saving 💙");
+      return;
+    }
+
+    // Check weekly limit for free users
+    if (!isPro() && weeklyCount >= weeklyLimit) {
+      toast.error("You've reached your weekly limit of 2 journal entries. Upgrade to Pro for unlimited journaling! 🌟");
       return;
     }
 
@@ -36,10 +75,15 @@ const Journal = () => {
       });
 
       setEntry("");
-      alert("✅ Your journal entry has been saved safely.");
+      toast.success("✅ Your journal entry has been saved safely.");
+      
+      // Update count for free users
+      if (!isPro()) {
+        setWeeklyCount(weeklyCount + 1);
+      }
     } catch (err) {
       console.error("Journal save error:", err);
-      alert("❌ Something went wrong. Please try again.");
+      toast.error("❌ Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -49,6 +93,7 @@ const Journal = () => {
     navigate("/journal-history");
   };
 
+  const remainingEntries = weeklyLimit - weeklyCount;
   const characterCount = entry.length;
 
   return (
@@ -81,27 +126,83 @@ const Journal = () => {
             textAlign: "center",
           }}
         >
-          <h2
-            style={{
-              fontSize: "32px",
-              fontWeight: "bold",
-              color: "#2e7d32",
-              margin: "0 0 16px 0",
-            }}
-          >
-            📓 Private Journal
-          </h2>
+          <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "12px", marginBottom: "16px" }}>
+            <h2
+              style={{
+                fontSize: "32px",
+                fontWeight: "bold",
+                color: "#2e7d32",
+                margin: 0,
+              }}
+            >
+              📓 Private Journal
+            </h2>
+            {isPro() && (
+              <span style={{ 
+                fontSize: "16px", 
+                background: "linear-gradient(135deg, #ffd700, #ffed4e)", 
+                color: "#000", 
+                padding: "6px 14px", 
+                borderRadius: "12px", 
+                fontWeight: "bold" 
+              }}>
+                👑 PRO
+              </span>
+            )}
+          </div>
 
           <p
             style={{
               fontSize: "18px",
               color: "#4caf50",
-              margin: "0 0 40px 0",
+              margin: "0 0 10px 0",
               lineHeight: "1.6",
             }}
           >
             This is your safe space. Write freely — no one else can see this. 💙
           </p>
+
+          {!isPro() && (
+            <div style={{
+              background: weeklyCount >= weeklyLimit ? "#fff3cd" : "#e8f5e9",
+              border: `2px solid ${weeklyCount >= weeklyLimit ? "#ffc107" : "#81c784"}`,
+              borderRadius: "16px",
+              padding: "12px 20px",
+              margin: "0 0 30px 0",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}>
+              <span style={{ fontSize: "16px", color: weeklyCount >= weeklyLimit ? "#856404" : "#2e7d32", fontWeight: "600" }}>
+                {weeklyCount >= weeklyLimit 
+                  ? "⚠️ Weekly limit reached" 
+                  : `📝 ${remainingEntries} entries remaining this week`}
+              </span>
+              {weeklyCount >= weeklyLimit && (
+                <button
+                  onClick={() => navigate("/subscription")}
+                  style={{
+                    padding: "8px 20px",
+                    background: "linear-gradient(135deg, #9c27b0, #7b1fa2)",
+                    color: "white",
+                    border: "none",
+                    borderRadius: "20px",
+                    fontSize: "14px",
+                    fontWeight: "600",
+                    cursor: "pointer",
+                  }}
+                >
+                  ⬆️ Upgrade to Pro
+                </button>
+              )}
+            </div>
+          )}
+
+          {isPro() && (
+            <p style={{ fontSize: "16px", color: "#666", margin: "0 0 30px 0", fontStyle: "italic" }}>
+              ✨ Unlimited entries • Enhanced privacy • Priority support
+            </p>
+          )}
 
           {/* Textarea Editor */}
           <div

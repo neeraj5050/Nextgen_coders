@@ -1,14 +1,17 @@
 // src/components/Navbar.jsx
-import { Link, useLocation, useNavigate } from "react-router-dom"; // ← Added useNavigate
-import { signOut } from "firebase/auth"; // ← For logout
-import { auth } from "../firebaseConfig"; // ← Your Firebase config
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebaseConfig";
 import logo from "../pages/image/logo.png";
+import { useSubscription } from "../hooks/useSubscription";
+import { toast } from "react-toastify";
 
 // import logo from '/path/to/logo.svg';
 
 const Navbar = () => {
   const location = useLocation();
-  const navigate = useNavigate(); // ← To redirect after logout
+  const navigate = useNavigate();
+  const { subscription, isPro } = useSubscription();
 
   const navItems = [
     { name: "Home", path: "/home" },
@@ -24,11 +27,11 @@ const Navbar = () => {
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      alert("✅ Logged out successfully!");
-      navigate("/"); // Redirect to login page
+      toast.success("✅ Logged out successfully!");
+      navigate("/");
     } catch (error) {
       console.error("Logout error:", error);
-      alert("❌ Logout failed. Please try again.");
+      toast.error("❌ Logout failed. Please try again.");
     }
   };
 
@@ -46,8 +49,8 @@ const Navbar = () => {
         zIndex: 1000,
       }}
     >
-      {/* Logo + Title */}
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "16px", marginBottom: "20px" }}>
+      {/* Logo + Title + Subscription Badge */}
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "16px", marginBottom: "20px", position: "relative" }}>
         <img
           src={logo}
           alt="MindCare Logo"
@@ -61,6 +64,29 @@ const Navbar = () => {
         <h1 style={{ fontSize: "40px", fontWeight: "bold", color: "#2e7d32", margin: 0 }}>
           MINDCARE
         </h1>
+        
+        {/* Subscription Badge */}
+        <Link to="/subscription" style={{ textDecoration: "none" }}>
+          <div style={{
+            padding: "8px 16px",
+            background: isPro() ? "linear-gradient(135deg, #ffd700, #ffed4e)" : "#e0e0e0",
+            color: isPro() ? "#000" : "#666",
+            borderRadius: "20px",
+            fontSize: "14px",
+            fontWeight: "bold",
+            boxShadow: isPro() ? "0 4px 15px rgba(255,215,0,0.4)" : "0 2px 8px rgba(0,0,0,0.1)",
+            cursor: "pointer",
+            transition: "all 0.3s",
+            display: "flex",
+            alignItems: "center",
+            gap: "6px",
+          }}
+          onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.05)"}
+          onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
+          >
+            {isPro() ? "👑 PRO" : "⭐ FREE"}
+          </div>
+        </Link>
       </div>
 
       {/* Navigation Buttons + Logout */}
@@ -93,6 +119,28 @@ const Navbar = () => {
           );
         })}
 
+        {/* Subscription Button */}
+        <Link to="/subscription" style={{ textDecoration: "none" }}>
+          <button
+            style={{
+              padding: "12px 28px",
+              fontSize: "16px",
+              fontWeight: "600",
+              background: isPro() ? "linear-gradient(135deg, #ffd700, #ffed4e)" : "#9c27b0",
+              color: isPro() ? "#000" : "white",
+              border: "none",
+              borderRadius: "30px",
+              cursor: "pointer",
+              boxShadow: isPro() ? "0 4px 12px rgba(255,215,0,0.4)" : "0 4px 12px rgba(156,39,176,0.3)",
+              transition: "all 0.3s ease",
+            }}
+            onMouseEnter={(e) => !isPro() && (e.target.style.background = "#7b1fa2")}
+            onMouseLeave={(e) => !isPro() && (e.target.style.background = "#9c27b0")}
+          >
+            {isPro() ? "👑 Pro Member" : "⬆️ Upgrade"}
+          </button>
+        </Link>
+
         {/* Logout Button */}
         <button
           onClick={handleLogout}
@@ -100,7 +148,7 @@ const Navbar = () => {
             padding: "12px 28px",
             fontSize: "16px",
             fontWeight: "600",
-            background: "#e57373", // Soft red for logout
+            background: "#e57373",
             color: "white",
             border: "none",
             borderRadius: "30px",

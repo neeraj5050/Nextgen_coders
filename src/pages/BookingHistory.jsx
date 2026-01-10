@@ -4,9 +4,12 @@ import Navbar from "../componet/navbar";
 import { auth, db } from "../firebaseConfig";
 import { useNavigate } from "react-router-dom";
 import { collection, query, where, getDocs, orderBy } from "firebase/firestore";
+import { useSubscription } from "../hooks/useSubscription";
+import SubscriptionBanner from "../componet/SubscriptionBanner";
 
 const BookingHistory = () => {
   const navigate = useNavigate();
+  const { isPro, loading: subLoading } = useSubscription();
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -32,6 +35,17 @@ const BookingHistory = () => {
     };
     fetchBookings();
   }, [navigate]);
+
+  if (subLoading) return <div className="loading-screen">Loading...</div>;
+
+  if (!isPro()) {
+    return (
+      <div style={{ minHeight: "100vh", background: "#f0f7ea" }}>
+        <Navbar />
+        <SubscriptionBanner />
+      </div>
+    );
+  }
 
   const formatDate = (timestamp) => {
     if (!timestamp) return "Pending";

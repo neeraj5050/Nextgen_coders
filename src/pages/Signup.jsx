@@ -3,9 +3,10 @@ import { useState } from "react";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "../firebaseConfig";
 import { Link, useNavigate } from "react-router-dom";
-import bgImage from "./image/backround.png";           // Your background
+import bgImage from "./image/backround.png";
 import leftIllustration from "./image/left-illustration.png";
-import logo from "./image/logo.png"; // Same as login
+import logo from "./image/logo.png";
+import { toast } from "react-toastify";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -53,8 +54,8 @@ const Signup = () => {
         createdAt: new Date(),
       });
 
-      alert("✅ Account created successfully! Please login.");
-      navigate("/"); // Redirect to login
+      toast.success("✅ Account created successfully! Please login.");
+      navigate("/");
     } catch (err) {
       console.error("Signup error:", err);
 

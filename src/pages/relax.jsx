@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Navbar from "../componet/navbar";
 import { auth } from "../firebaseConfig";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import meditatingMan from "./image/meditating-man.png";
 import seatedForwardBend from "./image/ben.png";
 import bridgePose from "./image/bridge-pose.png";
@@ -119,10 +120,10 @@ const Relax = () => {
             clearInterval(intervalRef.current);
             setIsRunning(false);
             if (popupContent?.content?.perSide && currentSide === 1) {
-              alert("🌿 Time to switch sides!");
+              toast.info("🌿 Time to switch sides!");
               return 0;
             } else {
-              alert("🌿 Session complete. You did beautifully.");
+              toast.success("🌿 Session complete. You did beautifully.");
               return 0;
             }
           }

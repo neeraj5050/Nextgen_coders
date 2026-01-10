@@ -1,6 +1,6 @@
 // src/pages/Tracker.jsx
 import React, { useState, useEffect } from "react";
-import Navbar from "../componet/navbar"; // ← Fixed typo
+import Navbar from "../componet/navbar";
 import { auth, db } from "../firebaseConfig";
 import { useNavigate } from "react-router-dom";
 import {
@@ -12,6 +12,7 @@ import {
   orderBy,
   limit,
 } from "firebase/firestore";
+import { toast } from "react-toastify";
 
 const Tracker = () => {
   const navigate = useNavigate();
@@ -75,9 +76,9 @@ const Tracker = () => {
         date: new Date(),
       });
       setTodayMood(moodName);
-      alert("🌿 Your mood has been saved. Thank you for checking in.");
+      toast.success("🌿 Your mood has been saved. Thank you for checking in.");
     } catch (err) {
-      alert("Couldn't save mood.");
+      toast.error("Couldn't save mood.");
     } finally {
       setMoodSaving(false);
     }
@@ -104,7 +105,7 @@ const Tracker = () => {
 
   const calculateSleepScore = () => {
     if (!selfReport || sleepDuration === 0) {
-      alert("Please complete your self-report.");
+      toast.warning("Please complete your self-report.");
       return;
     }
 

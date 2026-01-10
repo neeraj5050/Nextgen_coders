@@ -1,11 +1,14 @@
 // src/pages/BookDoctor.jsx
 import React, { useState } from "react";
-import { Link } from "react-router-dom"; // ← Added for history button
+import { Link } from "react-router-dom";
 import Navbar from "../componet/navbar";
 import { auth } from "../firebaseConfig";
 import { useNavigate } from "react-router-dom";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebaseConfig";
+import { useSubscription } from "../hooks/useSubscription";
+import SubscriptionBanner from "../componet/SubscriptionBanner";
+import { toast } from "react-toastify";
 
 // Default Doctors
 const defaultDoctors = [
@@ -40,6 +43,7 @@ const defaultDoctors = [
 
 const BookDoctor = () => {
   const navigate = useNavigate();
+  const { isPro, loading } = useSubscription();
   const [selectedDoctor, setSelectedDoctor] = useState(null);
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
@@ -51,10 +55,21 @@ const BookDoctor = () => {
     return null;
   }
 
+  if (loading) return <div className="loading-screen">Loading...</div>;
+
+  if (!isPro()) {
+    return (
+      <div style={{ minHeight: "100vh", background: "#f0f7ea" }}>
+        <Navbar />
+        <SubscriptionBanner />
+      </div>
+    );
+  }
+
   const handleBooking = async (e) => {
     e.preventDefault();
     if (!date || !time || !reason.trim()) {
-      alert("Please fill all fields.");
+      toast.warning("Please fill all fields.");
       return;
     }
 
@@ -71,13 +86,13 @@ const BookDoctor = () => {
         status: "pending",
         timestamp: serverTimestamp(),
       });
-      alert(`Appointment booked with ${selectedDoctor.name}! 🌿`);
+      toast.success(`Appointment booked with ${selectedDoctor.name}! 🌿`);
       setSelectedDoctor(null);
       setDate("");
       setTime("");
       setReason("");
     } catch (error) {
-      alert("Failed to book. Try again.");
+      toast.error("Failed to book. Try again.");
     } finally {
       setBooking(false);
     }

@@ -9,6 +9,7 @@ import {
 import { auth, db } from "../firebaseConfig";
 import Navbar from "../componet/navbar";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const JournalHistory = () => {
   const [journals, setJournals] = useState([]);
@@ -37,7 +38,7 @@ const JournalHistory = () => {
         setJournals(data);
       } catch (err) {
         console.error("Error fetching journals:", err);
-        alert("Couldn't load your journals. Please try again.");
+        toast.error("Couldn't load your journals. Please try again.");
       } finally {
         setLoading(false);
       }

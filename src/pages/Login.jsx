@@ -4,7 +4,8 @@ import { auth } from "../firebaseConfig";
 import { Link, useNavigate } from "react-router-dom";
 import bgImage from "./image/backround.png";
 import leftIllustration from "./image/left-illustration.png";
-import logo from "./image/logo.png"; // Your actual logo image
+import logo from "./image/logo.png";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -26,7 +27,7 @@ const Login = () => {
 
     try {
       await signInWithEmailAndPassword(auth, email.trim(), password);
-      alert("✅ Login successful! Welcome back.");
+      toast.success("✅ Login successful! Welcome back.");
       navigate("/home");
     } catch (err) {
       console.error("Login error:", err);
