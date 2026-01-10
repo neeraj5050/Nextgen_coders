@@ -20,14 +20,22 @@ button, a, input, textarea, select {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-button:hover, a:hover {
+button:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-button:active, a:active {
+a:hover {
+  opacity: 0.8;
+}
+
+button:active {
   transform: translateY(0);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+a:active {
+  opacity: 0.6;
 }
 
 input:focus, textarea:focus, select:focus {

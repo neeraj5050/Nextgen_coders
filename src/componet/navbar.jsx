@@ -110,8 +110,20 @@ const Navbar = () => {
                   transition: "all 0.3s ease",
                   transform: isActive ? "translateY(-3px)" : "translateY(0)",
                 }}
-                onMouseEnter={(e) => !isActive && (e.target.style.background = "#81c784")}
-                onMouseLeave={(e) => !isActive && (e.target.style.background = "#a5d6a7")}
+                onMouseEnter={(e) => {
+                  if (!isActive) {
+                    e.target.style.background = "#81c784";
+                    e.target.style.transform = "translateY(-2px)";
+                    e.target.style.boxShadow = "0 4px 12px rgba(76,175,80,0.3)";
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!isActive) {
+                    e.target.style.background = "#a5d6a7";
+                    e.target.style.transform = "translateY(0)";
+                    e.target.style.boxShadow = "0 2px 8px rgba(0,0,0,0.1)";
+                  }
+                }}
               >
                 {item.name}
               </button>
@@ -119,7 +131,6 @@ const Navbar = () => {
           );
         })}
 
-        {/* Subscription Button */}
         <Link to="/subscription" style={{ textDecoration: "none" }}>
           <button
             style={{
@@ -134,14 +145,31 @@ const Navbar = () => {
               boxShadow: isPro() ? "0 4px 12px rgba(255,215,0,0.4)" : "0 4px 12px rgba(156,39,176,0.3)",
               transition: "all 0.3s ease",
             }}
-            onMouseEnter={(e) => !isPro() && (e.target.style.background = "#7b1fa2")}
-            onMouseLeave={(e) => !isPro() && (e.target.style.background = "#9c27b0")}
+            onMouseEnter={(e) => {
+              if (!isPro()) {
+                e.target.style.background = "#7b1fa2";
+                e.target.style.transform = "translateY(-2px)";
+                e.target.style.boxShadow = "0 6px 16px rgba(156,39,176,0.4)";
+              } else {
+                e.target.style.transform = "translateY(-2px)";
+                e.target.style.boxShadow = "0 6px 16px rgba(255,215,0,0.5)";
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (!isPro()) {
+                e.target.style.background = "#9c27b0";
+                e.target.style.transform = "translateY(0)";
+                e.target.style.boxShadow = "0 4px 12px rgba(156,39,176,0.3)";
+              } else {
+                e.target.style.transform = "translateY(0)";
+                e.target.style.boxShadow = "0 4px 12px rgba(255,215,0,0.4)";
+              }
+            }}
           >
             {isPro() ? "👑 Pro Member" : "⬆️ Upgrade"}
           </button>
         </Link>
 
-        {/* Logout Button */}
         <button
           onClick={handleLogout}
           style={{
@@ -156,8 +184,16 @@ const Navbar = () => {
             boxShadow: "0 4px 12px rgba(229,115,115,0.3)",
             transition: "all 0.3s ease",
           }}
-          onMouseEnter={(e) => (e.target.style.background = "#ef5350")}
-          onMouseLeave={(e) => (e.target.style.background = "#e57373")}
+          onMouseEnter={(e) => {
+            e.target.style.background = "#ef5350";
+            e.target.style.transform = "translateY(-2px)";
+            e.target.style.boxShadow = "0 6px 16px rgba(229,115,115,0.4)";
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.background = "#e57373";
+            e.target.style.transform = "translateY(0)";
+            e.target.style.boxShadow = "0 4px 12px rgba(229,115,115,0.3)";
+          }}
         >
           Logout
         </button>
