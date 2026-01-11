@@ -183,7 +183,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-        {/* <Route path="/voice-chat" element={<ProtectedRoute><VoiceChat /></ProtectedRoute>} /> */}
+        <Route path="/voicechat" element={<ProtectedRoute><VoiceChat /></ProtectedRoute>} />
         <Route
           path="/music"
           element={
