@@ -40,35 +40,43 @@ const Navbar = () => {
   return (
     <div
       style={{
-        background: "#d0e8d0",
-        borderRadius: "20px",
-        padding: "20px 40px",
-        margin: "20px",
-        boxShadow: "0 8px 25px rgba(0,0,0,0.08)",
-        top: "20px",
+        background: "#ffffff",
+        // borderRadius: "20px",
+        padding: "10px",
+        margin: "0px",
+        // boxShadow: "0 8px 25px rgba(0,0,0,0.08)",
+        top: "0px",
         zIndex: 1000,
+        display: "flex",
+        alignItems: "center", justifyContent: "center",
+
       }}
     >
       {/* Logo + Title + Subscription Badge */}
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "16px", marginBottom: "20px", position: "relative" }}>
+      <div style={{ display: "flex",
+      position: "absolute",
+            left:"0px",
+         alignItems: "center", justifyContent: "center", gap: "16px" }}>
         <img
           src={logo}
           alt="MindCare Logo"
           style={{
-            width: "60px",
-            height: "60px",
+            width: "40px",
+            height: "40px",
             borderRadius: "50%",
             objectFit: "contain",
+            marginLeft: "10px",
+            
           }}
         />
-        <h1 style={{ fontSize: "40px", fontWeight: "bold", color: "#2e7d32", margin: 0 }}>
+        <h1 style={{ fontSize: "20px", fontWeight: "bold", color: "#3f3f3f", margin: 0 }}>
           MINDCARE
         </h1>
         
         {/* Subscription Badge */}
-        <Link to="/subscription" style={{ textDecoration: "none" }}>
+        {/* <Link to="/subscription" style={{ textDecoration: "none" }}>
           <div style={{
-            padding: "8px 16px",
+            padding: "6px 6px",
             background: isPro() ? "linear-gradient(135deg, #ffd700, #ffed4e)" : "#e0e0e0",
             color: isPro() ? "#000" : "#666",
             borderRadius: "20px",
@@ -79,14 +87,18 @@ const Navbar = () => {
             transition: "all 0.3s",
             display: "flex",
             alignItems: "center",
+            justifyContent: "center",
+            flexDirection: "row",
             gap: "6px",
+            margin:"4px",
+            whiteSpace:"nowrap",
           }}
           onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.05)"}
           onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
           >
-            {isPro() ? "👑 PRO" : "⭐ FREE"}
+            {isPro() ? "👑 " : "⭐ "}
           </div>
-        </Link>
+        </Link> */}
       </div>
 
       {/* Navigation Buttons + Logout */}
@@ -98,11 +110,11 @@ const Navbar = () => {
             <Link key={item.name} to={item.path} style={{ textDecoration: "none" }}>
               <button
                 style={{
-                  padding: "12px 28px",
+                  padding: "8px 18px",
                   fontSize: "16px",
                   fontWeight: "600",
-                  background: isActive ? "#4caf50" : "#a5d6a7",
-                  color: "white",
+                  background: isActive ? "#ffffff" : "#ffffff",
+                  color:  "black",
                   border: "none",
                   borderRadius: "30px",
                   cursor: "pointer",
@@ -130,13 +142,20 @@ const Navbar = () => {
             </Link>
           );
         })}
-
-        <Link to="/subscription" style={{ textDecoration: "none" }}>
+<div 
+style={{
+  position:"absolute",
+  right:"10px",
+  gap:"2px"
+}}
+>        
+  <Link to="/subscription" style={{ textDecoration: "none" }}>
           <button
             style={{
-              padding: "12px 28px",
+              padding: "6px 14px",
               fontSize: "16px",
               fontWeight: "600",
+              margin:"2px",
               background: isPro() ? "linear-gradient(135deg, #ffd700, #ffed4e)" : "#9c27b0",
               color: isPro() ? "#000" : "white",
               border: "none",
@@ -173,7 +192,7 @@ const Navbar = () => {
         <button
           onClick={handleLogout}
           style={{
-            padding: "12px 28px",
+            padding: "8px 18px",
             fontSize: "16px",
             fontWeight: "600",
             background: "#e57373",
@@ -181,6 +200,7 @@ const Navbar = () => {
             border: "none",
             borderRadius: "30px",
             cursor: "pointer",
+            
             boxShadow: "0 4px 12px rgba(229,115,115,0.3)",
             transition: "all 0.3s ease",
           }}
@@ -197,6 +217,8 @@ const Navbar = () => {
         >
           Logout
         </button>
+        </div>
+
       </div>
     </div>
   );
