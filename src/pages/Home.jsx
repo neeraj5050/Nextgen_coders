@@ -1,9 +1,10 @@
 // src/pages/Home.jsx
 import { useState, useEffect } from "react";
 import Navbar from "../componet/navbar"; 
-import heroImage from "./image/yoga.png";    
-import doctorImage from "./image/doc.png";     
+import heroImage from "./image/neer.png";    
+import doctorImage from "./image/hururu.png";     
 import { Link } from "react-router-dom";
+import Footer from "./Footerr";
 
 const Home = () => {
   const [loading, setLoading] = useState(true);
@@ -64,8 +65,8 @@ const Home = () => {
     <div
       style={{
         minHeight: "100vh",
-        background: "#f0f7ea", 
-        padding: "20px 20px 40px 20px", 
+        background: "#ffffff", 
+        padding: "0px", 
         fontFamily: "'Poppins', sans-serif",
       }}
     >
@@ -75,21 +76,23 @@ const Home = () => {
       {/* Hero Banner with Text at the TOP */}
       <div
         style={{
-          maxWidth: "1000px",
-          margin: "0 auto 50px auto",
-          background: "#d0e8d0",
+          maxWidth: "900px",
+          margin: "20px auto 50px auto",
+          background: "#ffffff",
           borderRadius: "30px",
           overflow: "hidden",
-          boxShadow: "0 10px 30px rgba(0,0,0,0.1)",
+          // boxShadow: "0 10px 30px rgba(0,0,0,0.1)",
           position: "relative",
+          
         }}
       >
         <img
           src={heroImage}
-          alt="Take a deep breath and relax"
+          alt=""
           style={{
             width: "100%",
-            height: "auto",
+            height: "80vh",
+            
             display: "block",
           }}
         />
@@ -109,16 +112,7 @@ const Home = () => {
             backdropFilter: "blur(2px)", // Nice subtle blur effect
           }}
         >
-          <h2
-            style={{
-              fontSize: "38px",
-              fontWeight: "800",
-              margin: "0",
-              textShadow: "2px 2px 8px rgba(255,255,255,0.9)",
-            }}
-          >
-            TAKE A DEEP BREATH & RELAX
-          </h2>
+         
         </div>
       </div>
 
@@ -141,16 +135,18 @@ const Home = () => {
     {/* Message 1 */}
     <div
       style={{
-        background: "linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%)",
+        background: "linear-gradient(135deg, #ffffff 0%, #eaeee9 100%)",
         borderRadius: "36px",
         padding: "60px 50px",
         textAlign: "center",
         boxShadow: "0 25px 60px rgba(129,199,132,0.25)",
-        borderLeft: "10px solid #81c784",
+       border:"2px solid black",
+        // borderLeft: "10px solid #000000",
         transition: "all 0.5s ease",
         position: "relative",
         overflow: "hidden",
         display: "flex",
+   
         flexDirection: "column",
         justifyContent: "center",
       }}
@@ -172,7 +168,7 @@ const Home = () => {
       <p
         style={{
           fontSize: "23px",
-          color: "#2e7d32",
+          color: "#3f5f3f",
           lineHeight: "1.8",
           fontWeight: "600",
           margin: "0",
@@ -180,7 +176,7 @@ const Home = () => {
       >
         Your mental health matters deeply — and you are never alone on this journey.
         <br /><br />
-        <span style={{ fontWeight: "400", color: "#33691e", fontSize: "20px" }}>
+        <span style={{ fontWeight: "400", color: "#161716", fontSize: "20px" }}>
           Even the smallest steps toward self-care can create powerful, lasting change.
         </span>
       </p>
@@ -189,12 +185,13 @@ const Home = () => {
     {/* Message 2 */}
     <div
       style={{
-        background: "linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%)",
+        background: "linear-gradient(135deg, #ffffff 0%, #e6f2f4 100%)",
         borderRadius: "36px",
         padding: "60px 50px",
         textAlign: "center",
         boxShadow: "0 25px 60px rgba(178,235,242,0.25)",
-        borderLeft: "10px solid #4dd0e1",
+        // borderLeft: "10px solid #182325",
+          border:"2px solid black",
         transition: "all 0.5s ease",
         position: "relative",
         overflow: "hidden",
@@ -237,12 +234,14 @@ const Home = () => {
     {/* Message 3 */}
     <div
       style={{
-        background: "linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%)",
+        background: "linear-gradient(135deg, #ffffff 0%, #fffcf2 100%)",
         borderRadius: "36px",
-        padding: "60px 50px",
+        padding: "40px 30px",
+        margin: "0px",
         textAlign: "center",
+          border:"2px solid black",
         boxShadow: "0 25px 60px rgba(255,236,179,0.25)",
-        borderLeft: "10px solid #ffca28",
+        // borderLeft: "10px solid #000000",
         transition: "all 0.5s ease",
         position: "relative",
         overflow: "hidden",
@@ -288,7 +287,8 @@ const Home = () => {
   style={{
     maxWidth: "1000px",
     margin: "0 auto 80px auto",
-    background: "linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%)",
+    background: "linear-gradient(135deg, #ffffff 0%, #ffffff 100%)",
+    border: "3px solid #2b2a2a",
     borderRadius: "40px",
     padding: "60px 40px",
     boxShadow: "0 20px 50px rgba(129,199,132,0.2)",
@@ -303,7 +303,7 @@ const Home = () => {
     top: "20px",
     left: "30px",
     fontSize: "60px",
-    opacity: 0.15,
+    opacity: 0.9,
     pointerEvents: "none",
   }}>🌿</div>
   <div style={{
@@ -311,7 +311,7 @@ const Home = () => {
     bottom: "30px",
     right: "40px",
     fontSize: "80px",
-    opacity: 0.1,
+    opacity: 0.9,
     pointerEvents: "none",
   }}>🍃</div>
 
@@ -319,11 +319,11 @@ const Home = () => {
     style={{
       fontSize: "38px",
       fontWeight: "bold",
-      color: "#2e7d32",
+      color: "#9688bd",
       margin: "0 0 24px 0",
     }}
   >
-    🌱 How Are You Feeling Today?
+    How Are You Feeling Today?
   </h2>
 
   <p
@@ -344,9 +344,10 @@ const Home = () => {
     <button
       style={{
         padding: "24px 70px",
-        background: "#4caf50",
-        color: "white",
-        border: "none",
+        // background: "#4caf50",
+        color: "black",
+        border: "2px solid black",
+       
         borderRadius: "40px",
         fontSize: "28px",
         fontWeight: "700",
@@ -423,13 +424,15 @@ const Home = () => {
           style={{
             flex: "1",
             minWidth: "300px",
-            background: "#d0e8d0",
+    border: "3px solid #2b2a2a",
+
+            background: "#ffffff",
             borderRadius: "30px",
             padding: "40px",
             boxShadow: "0 10px 30px rgba(0,0,0,0.08)",
           }}
         >
-          <h3 style={{ fontSize: "28px", color: "#2e7d32", margin: "0 0 20px 0" }}>
+          <h3 style={{ fontSize: "28px", color: "#7c64c7", margin: "0 0 20px 0" }}>
             Need to talk to someone?
           </h3>
           <p style={{ fontSize: "18px", color: "#33691e", lineHeight: "1.6" }}>
@@ -440,9 +443,10 @@ const Home = () => {
             style={{
               marginTop: "20px",
               padding: "14px 30px",
-              background: "#4caf50",
-              color: "white",
-              border: "none",
+              background: "#ffffff",
+              color: "black",
+                      border: "2px solid black",
+
               borderRadius: "30px",
               fontSize: "16px",
               fontWeight: "600",
@@ -454,7 +458,9 @@ const Home = () => {
           </button>
         </div>
       </div>
+      <Footer/>
     </div>
+
   );
 };
 

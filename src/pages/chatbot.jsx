@@ -68,7 +68,7 @@ const Chatbot = () => {
   // Missing API key warning
   if (!GEMINI_API_KEY) {
     return (
-      <div style={{ minHeight: "100vh", background: "#f0f7ea", display: "flex", flexDirection: "column" }}>
+      <div style={{ minHeight: "100vh", background: "#ffffff", display: "flex", flexDirection: "column" }}>
         <Navbar />
         <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "20px" }}>
           <div style={{ textAlign: "center", background: "white", padding: "40px", borderRadius: "30px", boxShadow: "0 10px 40px rgba(0,0,0,0.1)" }}>
@@ -153,7 +153,7 @@ const Chatbot = () => {
   const remainingMessages = dailyLimit - messageCount;
 
   return (
-    <div style={{ minHeight: "100vh", background: "#f0f7ea", display: "flex", flexDirection: "column" }}>
+    <div style={{ minHeight: "100vh", background: "#ffffff", display: "flex", flexDirection: "column" , justifyContent:"center" , alignItems:"center"}}>
       <Navbar />
 
       <div style={{ flex: 1, maxWidth: "900px", margin: "20px auto", width: "100%", padding: "0 20px" }}>
