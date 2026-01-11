@@ -100,7 +100,7 @@ const Journal = () => {
     <div
       style={{
         minHeight: "100vh",
-        background: "#f0f7ea",
+        background: "#ffffff",
         display: "flex",
         flexDirection: "column",
       }}
@@ -111,8 +111,9 @@ const Journal = () => {
         style={{
           flex: 1,
           maxWidth: "900px",
-          margin: "30px auto",
+          margin: "10px auto",
           width: "100%",
+          // height:"80vh",
           padding: "0 20px",
         }}
       >
@@ -131,7 +132,7 @@ const Journal = () => {
               style={{
                 fontSize: "32px",
                 fontWeight: "bold",
-                color: "#2e7d32",
+                color: "#140a83",
                 margin: 0,
               }}
             >
@@ -209,7 +210,7 @@ const Journal = () => {
             style={{
               background: "#f8fcf8",
               borderRadius: "24px",
-              padding: "24px",
+              padding: "14px",
               border: "2px solid #a5d6a7",
               marginBottom: "30px",
             }}
@@ -230,6 +231,7 @@ const Journal = () => {
                 background: "transparent",
                 resize: "none",
                 fontFamily: "inherit",
+                height:"200px",
               }}
             />
 

@@ -2,7 +2,7 @@
 // src/pages/Home.jsx
 import Navbar from "../componet/navbar"; 
 import heroImage from "./image/neer.png";    
-import doctorImage from "./image/doc.png";     
+import doctorImage from "./image/hururu.png";     
 import { Link } from "react-router-dom";
 import Footer from "./Footerr";
 
@@ -81,11 +81,12 @@ const Home = () => {
     {/* Message 1 */}
     <div
       style={{
-        background: "linear-gradient(135deg, #c5fbc5 0%, #57b25a 100%)",
+        background: "linear-gradient(135deg, #ffffff 0%, #eaeee9 100%)",
         borderRadius: "36px",
         padding: "60px 50px",
         textAlign: "center",
         boxShadow: "0 25px 60px rgba(129,199,132,0.25)",
+       border:"2px solid black",
         // borderLeft: "10px solid #000000",
         transition: "all 0.5s ease",
         position: "relative",
@@ -130,12 +131,13 @@ const Home = () => {
     {/* Message 2 */}
     <div
       style={{
-        background: "linear-gradient(135deg, #abd1d6 0%, #b2ebf2 100%)",
+        background: "linear-gradient(135deg, #ffffff 0%, #e6f2f4 100%)",
         borderRadius: "36px",
         padding: "60px 50px",
         textAlign: "center",
         boxShadow: "0 25px 60px rgba(178,235,242,0.25)",
         // borderLeft: "10px solid #182325",
+          border:"2px solid black",
         transition: "all 0.5s ease",
         position: "relative",
         overflow: "hidden",
@@ -178,11 +180,12 @@ const Home = () => {
     {/* Message 3 */}
     <div
       style={{
-        background: "linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%)",
+        background: "linear-gradient(135deg, #ffffff 0%, #fffcf2 100%)",
         borderRadius: "36px",
         padding: "40px 30px",
         margin: "0px",
         textAlign: "center",
+          border:"2px solid black",
         boxShadow: "0 25px 60px rgba(255,236,179,0.25)",
         // borderLeft: "10px solid #000000",
         transition: "all 0.5s ease",
@@ -262,11 +265,11 @@ const Home = () => {
     style={{
       fontSize: "38px",
       fontWeight: "bold",
-      color: "#2e7d32",
+      color: "#9688bd",
       margin: "0 0 24px 0",
     }}
   >
-    🌱 How Are You Feeling Today?
+    How Are You Feeling Today?
   </h2>
 
   <p
@@ -287,9 +290,10 @@ const Home = () => {
     <button
       style={{
         padding: "24px 70px",
-        background: "#4caf50",
-        color: "white",
-        border: "none",
+        // background: "#4caf50",
+        color: "black",
+        border: "2px solid black",
+       
         borderRadius: "40px",
         fontSize: "28px",
         fontWeight: "700",
@@ -374,7 +378,7 @@ const Home = () => {
             boxShadow: "0 10px 30px rgba(0,0,0,0.08)",
           }}
         >
-          <h3 style={{ fontSize: "28px", color: "#2e7d32", margin: "0 0 20px 0" }}>
+          <h3 style={{ fontSize: "28px", color: "#7c64c7", margin: "0 0 20px 0" }}>
             Need to talk to someone?
           </h3>
           <p style={{ fontSize: "18px", color: "#33691e", lineHeight: "1.6" }}>
@@ -385,9 +389,10 @@ const Home = () => {
             style={{
               marginTop: "20px",
               padding: "14px 30px",
-              background: "#4caf50",
-              color: "white",
-              border: "none",
+              background: "#ffffff",
+              color: "black",
+                      border: "2px solid black",
+
               borderRadius: "30px",
               fontSize: "16px",
               fontWeight: "600",

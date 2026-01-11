@@ -3,10 +3,10 @@ import React from 'react';
 const Footer = () => {
   // Theme Colors
   const colors = {
-    bg: '#2F4F4F',      // Dark Sage Green
-    text: '#fcfbf8',    // Cream/Off-white
-    accent: '#FFDAB9',  // Peach/Sand
-    muted: '#8da399',   // Lighter Sage for secondary text
+    bg: '#cecfee',      // Dark Sage Green
+    text: '#000000',    // Cream/Off-white
+    accent: '#ba6d29',  // Peach/Sand
+    muted: '#092380',   // Lighter Sage for secondary text
   };
 
   // Inline Styles
@@ -14,8 +14,9 @@ const Footer = () => {
     footer: {
       backgroundColor: colors.bg,
       color: colors.text,
+      marginTop:"30px",
       fontFamily: '"Inter", sans-serif',
-      padding: '4rem 5% 2rem 5%',
+      padding: '2rem 2% 5rem 5%',
       display: 'flex',
       flexWrap: 'wrap',
       justifyContent: 'space-between',

@@ -144,7 +144,7 @@ const Relax = () => {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: "#f0f7ea", display: "flex", flexDirection: "column" }}>
+    <div style={{ minHeight: "100vh", background: "#ffffff", display: "flex", flexDirection: "column" }}>
       <Navbar />
 
       <div style={{ flex: 1, padding: "40px 20px" }}>
