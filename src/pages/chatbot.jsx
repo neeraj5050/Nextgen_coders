@@ -208,6 +208,27 @@ const Chatbot = () => {
                 </button>
               )}
 
+              {/* Voice Chat Button */}
+              <button
+                onClick={() => navigate("/voicechat")}
+                style={{
+                  padding: "14px 28px",
+                  background: "#81c784",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "30px",
+                  fontSize: "16px",
+                  fontWeight: "600",
+                  cursor: "pointer",
+                  boxShadow: "0 6px 18px rgba(129,199,132,0.3)",
+                  transition: "all 0.3s ease",
+                }}
+                onMouseEnter={(e) => (e.target.style.background = "#66bb6a")}
+                onMouseLeave={(e) => (e.target.style.background = "#81c784")}
+              >
+                🎤 Voice Chat
+              </button>
+
               {/* New Chat Button */}
               <button
                 onClick={startNewChat}

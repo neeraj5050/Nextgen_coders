@@ -25,6 +25,7 @@ const Test = lazy(() => import("./pages/test"));
 const DoctorChat = lazy(() => import("./pages/DoctorChat"));
 const BookingHistory = lazy(() => import("./pages/BookingHistory"));
 const Subscription = lazy(() => import("./pages/Subscription"));
+const VoiceChat = lazy(() => import("./pages/voicechat"))
 
 
 const Loading = () => (
@@ -33,7 +34,7 @@ const Loading = () => (
     justifyContent: 'center',
     alignItems: 'center',
     height: '100vh',
-    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+    // background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
     color: 'white',
     fontSize: '1.5rem',
     fontWeight: '500'
@@ -182,7 +183,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-        {/* <Route path="/voice-chat" element={<ProtectedRoute><VoiceChat /></ProtectedRoute>} /> */}
+        <Route path="/voicechat" element={<ProtectedRoute><VoiceChat /></ProtectedRoute>} />
         <Route
           path="/music"
           element={

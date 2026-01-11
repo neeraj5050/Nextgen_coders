@@ -7,7 +7,13 @@ import { toast } from "react-toastify";
 const Subscription = () => {
   const [currentPlan, setCurrentPlan] = useState("free");
   const [loading, setLoading] = useState(true);
+  const [couponCode, setCouponCode] = useState("");
+  const [applyingCoupon, setApplyingCoupon] = useState(false);
   const navigate = useNavigate();
+
+  const VALID_COUPONS = {
+    "TRIAL": "pro"
+  };
 
   const plans = [
     {
@@ -94,7 +100,26 @@ const Subscription = () => {
     razorpay.open();
   };
 
-  const updateSubscription = async (planId, paymentId) => {
+  const handleApplyCoupon = async () => {
+    if (!couponCode.trim()) {
+      toast.error("Please enter a coupon code");
+      return;
+    }
+
+    setApplyingCoupon(true);
+    const upperCoupon = couponCode.trim().toUpperCase();
+
+    if (VALID_COUPONS[upperCoupon]) {
+      const planId = VALID_COUPONS[upperCoupon];
+      await updateSubscription(planId, null, upperCoupon);
+      setCouponCode("");
+    } else {
+      toast.error("Invalid coupon code");
+    }
+    setApplyingCoupon(false);
+  };
+
+  const updateSubscription = async (planId, paymentId, coupon = null) => {
     try {
       await setDoc(
         doc(db, "users", auth.currentUser.uid),
@@ -103,11 +128,12 @@ const Subscription = () => {
           subscriptionDate: new Date(),
           paymentId: paymentId,
           lastPaymentDate: paymentId ? new Date() : null,
+          couponUsed: coupon || null,
         },
         { merge: true }
       );
       setCurrentPlan(planId);
-      toast.success(`Successfully subscribed to ${planId} plan! 🎉`);
+      toast.success(coupon ? `Coupon applied! Welcome to ${planId} 🎉` : `Successfully subscribed to ${planId} plan! 🎉`);
     } catch (error) {
       console.error("Error updating subscription:", error);
       toast.error("Failed to update subscription. Please contact support.");
@@ -148,7 +174,7 @@ const Subscription = () => {
               <button style={styles.currentBtn}>Active Plan</button>
             ) : (
               <button
-                onClick={() => handleSubscribe(plan.id)}
+                onClick={() => handleSubscribe(plan)}
                 style={styles.subscribeBtn}
               >
                 {plan.id === "free" ? "Switch to Free" : "Upgrade to Pro"}
@@ -157,6 +183,29 @@ const Subscription = () => {
           </div>
         ))}
       </div>
+
+      {currentPlan !== "pro" && (
+        <div style={styles.couponContainer}>
+          <h3 style={styles.couponTitle}>Have a Coupon Code?</h3>
+          <div style={styles.couponInputGroup}>
+            <input
+              type="text"
+              value={couponCode}
+              onChange={(e) => setCouponCode(e.target.value)}
+              placeholder="Enter coupon code"
+              style={styles.couponInput}
+              onKeyPress={(e) => e.key === "Enter" && handleApplyCoupon()}
+            />
+            <button
+              onClick={handleApplyCoupon}
+              disabled={applyingCoupon}
+              style={styles.couponBtn}
+            >
+              {applyingCoupon ? "Applying..." : "Apply"}
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
@@ -277,6 +326,42 @@ const styles = {
     cursor: "not-allowed",
     fontSize: "16px",
     width: "100%",
+  },
+  couponContainer: {
+    marginTop: "50px",
+    backgroundColor: "white",
+    padding: "30px",
+    borderRadius: "10px",
+    boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
+    textAlign: "center",
+  },
+  couponTitle: {
+    color: "#333",
+    marginBottom: "20px",
+    fontSize: "20px",
+  },
+  couponInputGroup: {
+    display: "flex",
+    gap: "10px",
+    maxWidth: "400px",
+    margin: "0 auto",
+  },
+  couponInput: {
+    flex: 1,
+    padding: "12px",
+    border: "2px solid #ddd",
+    borderRadius: "5px",
+    fontSize: "16px",
+  },
+  couponBtn: {
+    padding: "12px 30px",
+    backgroundColor: "#4caf50",
+    color: "white",
+    border: "none",
+    borderRadius: "5px",
+    cursor: "pointer",
+    fontSize: "16px",
+    fontWeight: "600",
   },
 };
 
