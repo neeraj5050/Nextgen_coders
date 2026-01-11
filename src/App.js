@@ -25,6 +25,7 @@ const Test = lazy(() => import("./pages/test"));
 const DoctorChat = lazy(() => import("./pages/DoctorChat"));
 const BookingHistory = lazy(() => import("./pages/BookingHistory"));
 const Subscription = lazy(() => import("./pages/Subscription"));
+const VoiceChat = lazy(() => import("./pages/voicechat"))
 
 
 const Loading = () => (
