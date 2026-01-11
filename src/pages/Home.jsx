@@ -1,11 +1,65 @@
-
 // src/pages/Home.jsx
+import { useState, useEffect } from "react";
 import Navbar from "../componet/navbar"; 
 import heroImage from "./image/yoga.png";    
 import doctorImage from "./image/doc.png";     
 import { Link } from "react-router-dom";
 
 const Home = () => {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading time
+    const timer = setTimeout(() => setLoading(false), 1500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return (
+      <div style={{ minHeight: "100vh", background: "#f0f7ea", padding: "20px" }}>
+        <Navbar />
+        
+        {/* Hero Skeleton */}
+        <div style={{ maxWidth: "1000px", margin: "0 auto 50px", borderRadius: "30px", overflow: "hidden" }}>
+          <div className="skeleton" style={{ width: "100%", height: "400px", borderRadius: "30px" }} />
+        </div>
+
+        {/* Cards Skeleton */}
+        <div style={{ maxWidth: "1400px", margin: "0 auto 120px", padding: "0 40px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "50px" }}>
+            {[1, 2, 3].map((i) => (
+              <div key={i} style={{ background: "white", borderRadius: "36px", padding: "60px 50px" }}>
+                <div className="skeleton" style={{ height: "20px", marginBottom: "15px", borderRadius: "10px" }} />
+                <div className="skeleton" style={{ height: "20px", marginBottom: "15px", borderRadius: "10px", width: "90%" }} />
+                <div className="skeleton" style={{ height: "20px", marginBottom: "15px", borderRadius: "10px", width: "80%" }} />
+                <div className="skeleton" style={{ height: "20px", borderRadius: "10px", width: "70%" }} />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Mood Test Skeleton */}
+        <div style={{ maxWidth: "1000px", margin: "0 auto 80px", background: "white", borderRadius: "40px", padding: "60px 40px", textAlign: "center" }}>
+          <div className="skeleton" style={{ height: "40px", width: "60%", margin: "0 auto 24px", borderRadius: "10px" }} />
+          <div className="skeleton" style={{ height: "20px", width: "80%", margin: "0 auto 50px", borderRadius: "10px" }} />
+          <div className="skeleton" style={{ height: "60px", width: "300px", margin: "0 auto", borderRadius: "40px" }} />
+        </div>
+
+        <style>{`
+          .skeleton {
+            background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+          }
+          @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+          }
+        `}</style>
+      </div>
+    );
+  }
+
   return (
     <div
       style={{
